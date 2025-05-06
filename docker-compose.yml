@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  app:
+    build: ./app
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app:/app
+      - ./data:/data
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_ENV=development
+    depends_on:
+      - chroma
+      - gemma
+    networks:
+      - moroccan-gemma-network
+
+  gemma:
+    build: ./gemma
+    volumes:
+      - ./gemma:/gemma
+      - ./data:/data
+      - model_cache:/root/.cache/huggingface
+    environment:
+      - PYTHONUNBUFFERED=1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - moroccan-gemma-network
+
+  chroma:
+    build: ./chroma
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./chroma/data:/chroma/data
+      - ./data:/data
+    environment:
+      - CHROMA_DB_IMPL=duckdb+parquet
+      - CHROMA_PERSIST_DIRECTORY=/chroma/data
+    networks:
+      - moroccan-gemma-network
+
+networks:
+  moroccan-gemma-network:
+    driver: bridge
+
+volumes:
+  model_cache:
