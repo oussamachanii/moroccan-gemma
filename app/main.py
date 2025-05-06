@@ -9,7 +9,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Configuration
-GEMMA_API_URL = os.getenv("GEMMA_API_URL", "http://gemma:8080")
+GEMMA_API_URL = os.getenv("GEMMA_API_URL", "http://gemma-adapter:8080")
 CHROMA_API_URL = os.getenv("CHROMA_API_URL", "http://chroma:8000")
 
 @app.route('/')

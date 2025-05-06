@@ -24,6 +24,7 @@ services:
       - ./data:/data
     environment:
       - PYTHONUNBUFFERED=1
+    command: model-runner --tcp 8080 --model ai/gemma3
     deploy:
       resources:
         reservations:
