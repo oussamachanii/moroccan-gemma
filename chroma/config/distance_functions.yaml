@@ -1,0 +1,9 @@
+# Available distance functions for similarity search
+distance_functions:
+  - name: l2
+    description: Euclidean distance (L2 norm)
+  - name: cosine
+    description: Cosine similarity
+    default: true
+  - name: ip
+    description: Inner product (dot product)

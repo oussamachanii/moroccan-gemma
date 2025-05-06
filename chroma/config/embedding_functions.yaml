@@ -1,0 +1,17 @@
+# Pre-configured embedding functions
+embedding_functions:
+  - name: all-MiniLM-L6-v2
+    provider: sentence-transformers
+    description: General purpose embedding model, good for multilingual text
+    dimensions: 384
+    default: true
+    
+  - name: multilingual-e5-large
+    provider: sentence-transformers
+    description: Powerful multilingual embedding model, especially good for Arabic
+    dimensions: 1024
+    
+  - name: paraphrase-multilingual-MiniLM-L12-v2
+    provider: sentence-transformers
+    description: Optimized for paraphrase detection in multiple languages
+    dimensions: 384

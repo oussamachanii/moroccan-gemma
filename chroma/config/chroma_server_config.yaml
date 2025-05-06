@@ -1,0 +1,41 @@
+# Server configuration
+server:
+  http_host: 0.0.0.0
+  http_port: 8000
+  cors_allow_origins: 
+    - http://localhost:5000
+    - http://app:5000
+  cors_allow_credentials: true
+  cors_allow_methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - OPTIONS
+  cors_allow_headers:
+    - Content-Type
+    - Authorization
+
+# Database configuration
+database:
+  type: duckdb+parquet
+  persist_directory: /chroma/data
+
+# Embedding settings
+embeddings:
+  default_embedding_function: sentence-transformers/all-MiniLM-L6-v2
+  embedding_cache: true
+
+# Telemetry and logs
+telemetry:
+  enabled: false
+  anonymous_user_id: moroccan-gemma-application
+
+# Authentication (disabled for local development)
+auth:
+  enabled: false
+
+# System settings
+system:
+  max_batch_size: 1000  # Maximum batch size for add/update operations
+  max_threads: 10       # Maximum number of threads for parallel operations

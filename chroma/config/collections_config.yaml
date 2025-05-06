@@ -1,0 +1,22 @@
+collections:
+  moroccan_dialect:
+    description: Moroccan Darija dialect text samples
+    metadata_schema:
+      translation:
+        type: string
+        description: English translation of the Darija text
+        required: false
+      source:
+        type: string
+        description: Source of the text sample
+        required: false
+      region:
+        type: string
+        description: Specific region of Morocco the dialect is from
+        required: false
+      category:
+        type: string
+        description: Category or topic of the text
+        required: false
+    embedding_function: all-MiniLM-L6-v2
+    distance_function: cosine
