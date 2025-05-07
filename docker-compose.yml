@@ -2,13 +2,14 @@ services:
   app:
     build: ./app
     ports:
-      - "5000:5000"
+      - "5001:5000"
     volumes:
       - ./app:/app
       - ./data:/data
     environment:
       - FLASK_APP=main.py
       - FLASK_ENV=development
+      - GEMMA_API_URL=http://gemma:8080  # Direct connection to gemma
     depends_on:
       - chroma
       - gemma
@@ -16,35 +17,14 @@ services:
       - moroccan-gemma-network
 
   gemma:
-    image: ai/gemma3
+    build: ./gemma
     ports:
       - "8080:8080"
     volumes:
-      - ./gemma/adapter:/adapter
-      - ./data:/data
-    environment:
-      - PYTHONUNBUFFERED=1
-    command: model-runner --tcp 8080 --model ai/gemma3
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [ gpu ]
-    networks:
-      - moroccan-gemma-network
-
-  gemma-adapter:
-    build: ./gemma
-    volumes:
       - ./gemma:/gemma
       - ./data:/data
-    depends_on:
-      - gemma
     environment:
       - PYTHONUNBUFFERED=1
-      - GEMMA_API_URL=http://gemma:8080
     networks:
       - moroccan-gemma-network
 
@@ -64,6 +44,3 @@ services:
 networks:
   moroccan-gemma-network:
     driver: bridge
-
-volumes:
-  model_cache:

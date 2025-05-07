@@ -1,22 +1,15 @@
 FROM python:3.10-slim
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /chroma
 
-# Install Chroma
-RUN pip install --no-cache-dir chromadb==0.4.18
-
-# Create data directory for persistence
+# Create data directory
 RUN mkdir -p /chroma/data
 
-# Copy configuration
-COPY config /chroma/config
+# Copy the server script
+COPY scripts/server.py /chroma/server.py
 
-# Expose Chroma API port
+# Expose port
 EXPOSE 8000
 
-# Start Chroma server
-CMD ["python", "-m", "chromadb.server", "--host", "0.0.0.0", "--port", "8000"]
+# Run the mock server
+CMD ["python", "/chroma/server.py"]
